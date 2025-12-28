@@ -1,7 +1,7 @@
 import { Maximize2 } from 'lucide-react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { type Certification, certifications } from '#/data/certifications';
-import { CertificationDialog } from './CertificationDialog';
+import { CertificationDialog } from './certification-dialog';
 
 export function CertificationList() {
   const [selectedUrl, setSelectedUrl] = useState<Certification['url'] | null>(
@@ -10,6 +10,14 @@ export function CertificationList() {
 
   const selectedCert = certifications.find((cert) => cert.url === selectedUrl);
 
+  const handleSelect = useCallback((url: Certification['url']) => {
+    setSelectedUrl(url);
+  }, []);
+
+  const handleClose = useCallback((open: boolean) => {
+    if (!open) setSelectedUrl(null);
+  }, []);
+
   return (
     <>
       <div className='flex flex-col'>
@@ -17,7 +25,7 @@ export function CertificationList() {
           <button
             type='button'
             key={cert.url}
-            onClick={() => setSelectedUrl(cert.url)}
+            onClick={() => handleSelect(cert.url)}
             className='group py-5 first:pt-0 last:pb-0 flex items-start gap-3 text-left hover:bg-bg-alt/50 -mx-4 px-4 rounded-lg transition-colors cursor-pointer'
           >
             <div className='flex-1'>
@@ -34,24 +42,16 @@ export function CertificationList() {
 
       <CertificationDialog
         open={!!selectedCert}
-        onOpenChange={(open) => !open && setSelectedUrl(null)}
+        onOpenChange={handleClose}
         title={selectedCert?.title}
         issuer={selectedCert?.issuer}
       >
-        {/*  {selectedCert?.type === 'image' ? (
-          <img
-            src={selectedCert.url}
-            alt={selectedCert.title}
-            className='w-full h-auto rounded-lg border border-border'
-          />
-        ) : ( */}
         <iframe
           src={selectedCert?.url}
           title={selectedCert?.title}
           className='w-full h-[60vh] border border-border'
           allowFullScreen
         />
-        {/* )} */}
       </CertificationDialog>
     </>
   );

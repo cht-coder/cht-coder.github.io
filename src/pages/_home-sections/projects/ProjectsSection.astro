@@ -1,11 +1,14 @@
 ---
-import ProjectCard from '#/components/ProjectCard.astro';
+import ProjectCard from './ProjectCard.astro';
 import { projects } from '#/data/projects';
 ---
 
 <section id="work" class="section">
   <div class="section-container">
     <h2 class="section-heading-lg">Projects</h2>
+    <p class="text-text-muted text-sm -mt-12 mb-8 max-w-lg">
+      Selected work showcasing my skills and creativity.
+    </p>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       {projects.map((project) => (
         <ProjectCard {...project} />

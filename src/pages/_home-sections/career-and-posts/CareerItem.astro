@@ -36,7 +36,7 @@ const {
     style="margin-left: -6px;"
   />
   <div
-    class="p-8 bg-bg-alt border-2 border-border rounded-xl hover:translate-x-1 hover:shadow-[-4px_4px_0_var(--color-border)] transition-all"
+    class="p-5 md:p-6 bg-bg-alt border-2 border-border rounded-xl hover:translate-x-1 hover:shadow-[-4px_4px_0_var(--color-border)] transition-all"
   >
     <div class="flex items-center gap-4 mb-2">
       <span class="font-mono text-xs tracking-widest text-text-muted">
@@ -52,9 +52,9 @@ const {
     <p class="font-mono text-sm text-primary mb-2">{company}</p>
     <p class="text-text-muted text-sm mb-4">{desc}</p>
     {tags.length > 0 && (
-      <div class="flex gap-2 flex-wrap">
+      <div class="flex gap-1.5 flex-wrap">
         {tags.map((tag) => (
-          <span class="font-mono text-xs px-2 py-1 border border-border-light rounded-md uppercase">
+          <span class="font-mono text-[0.625rem] px-1.5 py-0.5 border border-border-light rounded-md uppercase">
             {tag}
           </span>
         ))}

@@ -121,20 +121,20 @@
 @layer components {
   /* Section container - used in all section components */
   .section {
-    @apply py-32;
+    @apply py-20 md:py-32;
   }
 
   .section-container {
-    @apply max-w-7xl mx-auto px-8;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 md:px-8;
   }
 
   /* Section headings */
   .section-heading {
-    @apply text-4xl md:text-5xl uppercase mb-12;
+    @apply text-3xl sm:text-4xl md:text-5xl uppercase mb-12;
   }
 
   .section-heading-lg {
-    @apply text-4xl md:text-5xl uppercase mb-16;
+    @apply text-3xl sm:text-4xl md:text-5xl uppercase mb-16;
   }
 
   /* Glass effect card */

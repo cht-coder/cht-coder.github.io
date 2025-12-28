@@ -8,7 +8,10 @@ const resumeUrl =
 const resumeDownloadName = 'Your_Name_Resume.pdf';
 ---
 
-<Layout title="Resume | Portfolio">
+<Layout
+  title="Resume | Portfolio"
+  description="View and download my professional resume."
+>
   <section class="py-16 pt-28 min-h-screen">
     <div class="max-w-7xl mx-auto px-6 md:px-8">
       <!-- Header -->
@@ -33,6 +36,7 @@ const resumeDownloadName = 'Your_Name_Resume.pdf';
         >
           <iframe
             src={resumeUrl}
+            loading="lazy"
             title="Resume"
             class="w-full h-(--resume-height) max-h-[85vh] border-0"
           ></iframe>

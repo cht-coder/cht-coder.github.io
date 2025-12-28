@@ -1,6 +1,6 @@
 ---
 import { Home } from 'lucide-astro';
-import ThemeToggle from '#/components/ThemeToggle.astro';
+import ThemeToggle from './ThemeToggle.astro';
 import { navItems } from '#/data/navigation';
 
 const currentPath = Astro.url.pathname;
@@ -32,6 +32,7 @@ const isActivePage = (href: string) => {
 
   {navItems.map((item) => (
     <a
+      data-astro-prefetch
       href={item.href}
       class:list={[
         "font-mono text-xs font-medium uppercase tracking-wide px-4 py-2 rounded-full border-0 transition-colors",

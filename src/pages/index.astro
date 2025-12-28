@@ -1,20 +1,30 @@
 ---
 import SectionDivider from '#/components/SectionDivider.astro';
-import CareerBlogSection from '#/components/sections/CareerBlogSection.astro';
-import HeroSection from '#/components/sections/HeroSection.astro';
-import ProjectsSection from '#/components/sections/ProjectsSection.astro';
-import SkillsCertificationsSection from '#/components/sections/SkillsCertificationsSection.astro';
+import SchemaOrg from '#/components/SchemaOrg.astro';
+import CareerAndPostsSection from './_home-sections/career-and-posts/CareerAndPostsSection.astro';
+import HeroSection from './_home-sections/hero/HeroSection.astro';
+import ProjectsSection from './_home-sections/projects/ProjectsSection.astro';
+import SkillsCertificationsSection from './_home-sections/skills-and-certifications/SkillsCertificationsSection.astro';
 import Layout from '#/layouts/Layout.astro';
+import { siteConfig } from '#/data/site-config';
 
 const sections = [
   HeroSection,
-  CareerBlogSection,
+  CareerAndPostsSection,
   SkillsCertificationsSection,
   ProjectsSection,
 ] as const;
 ---
 
-<Layout title="Portfolio | Developer">
+<Layout title={siteConfig.title} customSchema>
+  <SchemaOrg
+    slot="head"
+    type="person"
+    name={siteConfig.author.name}
+    jobTitle={siteConfig.author.jobTitle}
+    url={siteConfig.url}
+    sameAs={siteConfig.sameAs}
+  />
   {sections.map(((Section,i)=>{
     const isLast = i === sections.length - 1;
     return (
@@ -24,11 +34,4 @@ const sections = [
       </>
     );
   }))}
-  <!-- <HeroSection/>
-  <SectionDivider/>
-  <CareerBlogSection/>
-  <SectionDivider/>
-  <SkillsCertificationsSection/>
-  <SectionDivider/>
-  <ProjectsSection/> -->
 </Layout>

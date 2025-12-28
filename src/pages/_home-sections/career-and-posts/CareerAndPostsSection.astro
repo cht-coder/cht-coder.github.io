@@ -1,5 +1,5 @@
 ---
-import CareerItem from '#/components/CareerItem.astro';
+import CareerItem from './CareerItem.astro';
 import { career } from '#/data/career';
 import { Button } from '@base-ui/react';
 import { getCollection } from 'astro:content';
@@ -21,6 +21,9 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       <!-- Career (takes more space) -->
       <div class="group/career" id="career" data-expanded="false">
         <h2 class="section-heading-lg">Career</h2>
+        <p class="text-text-muted text-sm -mt-12 mb-8 max-w-lg">
+          My professional journey building software solutions.
+        </p>
         <div id="career-timeline" class="relative pl-12 md:pl-16">
           <!-- Animated wave line -->
           <div
@@ -56,8 +59,13 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
       <!-- Recent Posts (takes less space) -->
       <div>
-        <div class="flex items-center justify-between mb-12">
-          <h2 class="text-4xl md:text-5xl uppercase">Recent Posts</h2>
+        <div class="mb-8">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl uppercase">
+            Recent Posts
+          </h2>
+          <p class="text-text-muted text-sm mt-2">
+            Thoughts and learnings from my experiences.
+          </p>
         </div>
         <div class="flex flex-col divide-y divide-border">
           {recentPosts.map((post) => (

@@ -1,6 +1,6 @@
 ---
-import SkillGrid from '#/components/SkillGrid.astro';
-import { CertificationList } from '#/components/CertificationList';
+import SkillGrid from './SkillGrid.astro';
+import { CertificationList } from './certification-list';
 ---
 
 <section id="skills-certifications" class="section">
@@ -10,12 +10,18 @@ import { CertificationList } from '#/components/CertificationList';
       <!-- Skills & Tools (takes more space) -->
       <div>
         <h2 class="section-heading">Skills & Tools</h2>
+        <p class="text-text-muted text-sm -mt-10 mb-8">
+          Technologies I work with daily.
+        </p>
         <SkillGrid/>
       </div>
 
       <!-- Certifications (takes less space) -->
       <div>
         <h2 class="section-heading">Certifications</h2>
+        <p class="text-text-muted text-sm -mt-10 mb-8">
+          Professional credentials and achievements.
+        </p>
         <CertificationList client:load/>
       </div>
     </div>

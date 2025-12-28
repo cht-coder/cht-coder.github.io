@@ -71,10 +71,30 @@
       if (p.y < 0) p.y = canvas.height;
       if (p.y > canvas.height) p.y = 0;
 
+      // Create radial gradient for shine effect
+      const gradient = ctx.createRadialGradient(
+        p.x,
+        p.y,
+        0,
+        p.x,
+        p.y,
+        p.size * 2
+      );
+      gradient.addColorStop(0, color);
+      gradient.addColorStop(0.4, color);
+      gradient.addColorStop(1, 'transparent');
+
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = color;
+      ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
+      ctx.fillStyle = gradient;
       ctx.globalAlpha = p.opacity;
+      ctx.fill();
+
+      // Add bright core
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.globalAlpha = p.opacity * 1.5;
       ctx.fill();
     }
 

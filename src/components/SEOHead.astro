@@ -1,4 +1,6 @@
 ---
+import { siteConfig } from '#/data/site-config';
+
 interface Props {
   title: string;
   description: string;
@@ -12,14 +14,14 @@ interface Props {
 const {
   title,
   description,
-  image = '/og-image.png',
+  image = siteConfig.ogImage,
   type = 'website',
   publishedTime,
-  author,
+  author = siteConfig.author.name,
   canonicalUrl,
 } = Astro.props;
 
-const siteUrl = Astro.site?.toString() || 'https://example.com';
+const siteUrl = Astro.site?.toString() || siteConfig.url;
 const currentUrl =
   canonicalUrl || new URL(Astro.url.pathname, siteUrl).toString();
 const imageUrl = image.startsWith('http')
@@ -47,7 +49,7 @@ const imageUrl = image.startsWith('http')
 <meta property="og:title" content={title}>
 <meta property="og:description" content={description}>
 <meta property="og:image" content={imageUrl}>
-<meta property="og:site_name" content="Portfolio">
+<meta property="og:site_name" content={siteConfig.name}>
 <meta property="og:locale" content="en_US">
 
 {type === 'article' && publishedTime && (
