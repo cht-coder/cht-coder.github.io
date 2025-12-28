@@ -9,6 +9,7 @@ export default defineConfig({
   integrations: [react(), mdx()],
 
   site: 'https://cht-coder.github.io',
+  prefetch: true,
 
   vite: {
     plugins: [tailwindcss()],
