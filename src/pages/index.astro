@@ -1,0 +1,34 @@
+---
+import SectionDivider from '#/components/SectionDivider.astro';
+import CareerBlogSection from '#/components/sections/CareerBlogSection.astro';
+import HeroSection from '#/components/sections/HeroSection.astro';
+import ProjectsSection from '#/components/sections/ProjectsSection.astro';
+import SkillsCertificationsSection from '#/components/sections/SkillsCertificationsSection.astro';
+import Layout from '#/layouts/Layout.astro';
+
+const sections = [
+  HeroSection,
+  CareerBlogSection,
+  SkillsCertificationsSection,
+  ProjectsSection,
+] as const;
+---
+
+<Layout title="Portfolio | Developer">
+  {sections.map(((Section,i)=>{
+    const isLast = i === sections.length - 1;
+    return (
+      <>
+        {<Section />}
+        {!isLast && <SectionDivider />}
+      </>
+    );
+  }))}
+  <!-- <HeroSection/>
+  <SectionDivider/>
+  <CareerBlogSection/>
+  <SectionDivider/>
+  <SkillsCertificationsSection/>
+  <SectionDivider/>
+  <ProjectsSection/> -->
+</Layout>

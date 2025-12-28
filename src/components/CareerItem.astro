@@ -1,0 +1,64 @@
+---
+interface Props {
+  date: string;
+  role: string;
+  company: string;
+  desc: string;
+  tags: readonly string[];
+  current?: boolean;
+  isFirst?: boolean;
+  isHidden: boolean;
+  className?: string;
+}
+
+const {
+  date,
+  role,
+  company,
+  desc,
+  tags,
+  current = false,
+  isFirst = false,
+  isHidden,
+  className = '',
+} = Astro.props;
+---
+
+<article
+  class:list={["relative mb-8 last:mb-0", className]}
+  data-initially-hidden={isHidden}
+>
+  <div
+    class:list={[
+      "absolute -left-12 md:-left-16 top-8 w-3.5 h-3.5 rounded-sm",
+      isFirst ? "bg-primary border-primary" : "bg-bg border-2 border-border"
+    ]}
+    style="margin-left: -6px;"
+  />
+  <div
+    class="p-8 bg-bg-alt border-2 border-border rounded-xl hover:translate-x-1 hover:shadow-[-4px_4px_0_var(--color-border)] transition-all"
+  >
+    <div class="flex items-center gap-4 mb-2">
+      <span class="font-mono text-xs tracking-widest text-text-muted">
+        {date}
+      </span>
+      {current && (
+        <span class="font-mono text-[0.625rem] font-bold uppercase tracking-widest px-2 py-1 bg-success text-white rounded-md">
+          Current
+        </span>
+      )}
+    </div>
+    <h3 class="text-xl font-mono font-bold mb-1">{role}</h3>
+    <p class="font-mono text-sm text-primary mb-2">{company}</p>
+    <p class="text-text-muted text-sm mb-4">{desc}</p>
+    {tags.length > 0 && (
+      <div class="flex gap-2 flex-wrap">
+        {tags.map((tag) => (
+          <span class="font-mono text-xs px-2 py-1 border border-border-light rounded-md uppercase">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+  </div>
+</article>

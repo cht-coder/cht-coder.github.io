@@ -1,0 +1,63 @@
+---
+import { Github, Twitter, Linkedin, Mail, MapPin } from 'lucide-astro';
+import { profile, socials } from '#/data/profile';
+
+const iconMap = {
+  github: Github,
+  twitter: Twitter,
+  linkedin: Linkedin,
+};
+---
+
+<section class="py-32 pt-40 min-h-[90vh] flex items-center">
+  <div class="section-container">
+    <div class="max-w-4xl mx-auto text-center">
+      <span
+        class="block font-mono text-sm mb-4 tracking-[0.2em] text-text-muted"
+      >
+        HELLO, I'M
+      </span>
+      <h1 class="text-6xl md:text-8xl uppercase mb-6">{profile.name}</h1>
+
+      <!-- Location -->
+      <div class="flex items-center justify-center gap-2 mb-8 text-text-muted">
+        <MapPin class="w-4 h-4"/>
+        <span class="font-mono text-sm tracking-wide">{profile.location}</span>
+      </div>
+
+      <p class="text-xl mb-8 max-w-2xl mx-auto text-text-muted">
+        {profile.tagline}
+      </p>
+
+      <!-- About Content -->
+      <div class="mb-12 max-w-2xl mx-auto">
+        <p class="text-lg leading-relaxed">{profile.about}</p>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="flex gap-4 flex-wrap justify-center">
+        <a href={`mailto:${profile.email}`} class="btn-primary">
+          <Mail class="w-4 h-4"/>
+          Email Me
+        </a>
+        <!-- Social Links -->
+        <div class="flex gap-3">
+          {socials.map((social) => {
+            const Icon = iconMap[social.platform];
+            return (
+              <a
+                href={social.url}
+                target="_blank"
+                rel="noopener"
+                class="btn-icon"
+                aria-label={social.platform.charAt(0).toUpperCase() + social.platform.slice(1)}
+              >
+                <Icon class="w-4 h-4" />
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

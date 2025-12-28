@@ -1,0 +1,14 @@
+---
+import { Copyright } from 'lucide-astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t-2 border-border py-16 mt-32">
+  <div class="max-w-7xl mx-auto px-8 flex justify-between items-center text-sm">
+    <div class="flex items-center gap-2">
+      <Copyright/>
+      <span class="font-mono"> {currentYear}</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,23 @@
+---
+import SkillGrid from '#/components/SkillGrid.astro';
+import { CertificationList } from '#/components/CertificationList';
+---
+
+<section id="skills-certifications" class="section">
+  <div class="section-container">
+    <!-- Two column grid: Skills (larger) | Certifications (smaller) -->
+    <div class="grid lg:grid-cols-[2fr_1fr] gap-16 lg:gap-12">
+      <!-- Skills & Tools (takes more space) -->
+      <div>
+        <h2 class="section-heading">Skills & Tools</h2>
+        <SkillGrid/>
+      </div>
+
+      <!-- Certifications (takes less space) -->
+      <div>
+        <h2 class="section-heading">Certifications</h2>
+        <CertificationList client:load/>
+      </div>
+    </div>
+  </div>
+</section>

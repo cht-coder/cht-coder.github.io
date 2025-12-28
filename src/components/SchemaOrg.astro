@@ -1,0 +1,76 @@
+---
+interface PersonSchema {
+  type: 'person';
+  name: string;
+  jobTitle?: string;
+  url?: string;
+  sameAs?: string[];
+}
+
+interface WebSiteSchema {
+  type: 'website';
+  name: string;
+  description: string;
+  url: string;
+}
+
+interface ArticleSchema {
+  type: 'article';
+  headline: string;
+  description: string;
+  datePublished: Date;
+  dateModified?: Date;
+  author: string;
+  url: string;
+  image?: string;
+}
+
+type Props = PersonSchema | WebSiteSchema | ArticleSchema;
+
+const props = Astro.props;
+const siteUrl = Astro.site?.toString() || 'https://example.com';
+
+function generateSchema(props: Props) {
+  switch (props.type) {
+    case 'person':
+      return {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: props.name,
+        jobTitle: props.jobTitle,
+        url: props.url || siteUrl,
+        sameAs: props.sameAs || [],
+      };
+    case 'website':
+      return {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: props.name,
+        description: props.description,
+        url: props.url,
+      };
+    case 'article':
+      return {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: props.headline,
+        description: props.description,
+        datePublished: props.datePublished.toISOString(),
+        dateModified: (props.dateModified || props.datePublished).toISOString(),
+        author: {
+          '@type': 'Person',
+          name: props.author,
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': props.url,
+        },
+        image: props.image,
+      };
+  }
+}
+
+const schema = generateSchema(props);
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)}/>

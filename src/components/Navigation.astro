@@ -1,0 +1,84 @@
+---
+import { Home } from 'lucide-astro';
+import ThemeToggle from '#/components/ThemeToggle.astro';
+import { navItems } from '#/data/navigation';
+
+const currentPath = Astro.url.pathname;
+
+const isActivePage = (href: string) => {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+};
+---
+
+<nav
+  id="main-nav"
+  data-scroll-state="visible"
+  class="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 p-1.5 bg-glass-bg backdrop-blur-xl border border-glass-border rounded-full shadow-lg transition-all duration-300 data-[scroll-state=hidden]:-translate-y-20 data-[scroll-state=hidden]:opacity-0"
+>
+  <!-- Home Icon -->
+  <a
+    href="/"
+    class:list={[
+      "flex items-center justify-center w-9 h-9 rounded-full border-0 transition-colors",
+      isActivePage("/")
+        ? "bg-primary text-white"
+        : "hover:bg-primary hover:text-white",
+    ]}
+    aria-label="Home"
+  >
+    <Home class="w-4 h-4"/>
+  </a>
+
+  {navItems.map((item) => (
+    <a
+      href={item.href}
+      class:list={[
+        "font-mono text-xs font-medium uppercase tracking-wide px-4 py-2 rounded-full border-0 transition-colors",
+        isActivePage(item.href)
+          ? "bg-primary text-white"
+          : "hover:bg-primary hover:text-white",
+      ]}
+    >
+      {item.label}
+    </a>
+  ))}
+
+  <!-- Divider -->
+  <div class="w-px h-5 bg-border-light mx-1"></div>
+
+  <ThemeToggle/>
+</nav>
+
+<script>
+  const nav = document.getElementById('main-nav') as HTMLElement;
+  const NAV_VISIBILITY_THRESHOLD = 100;
+
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
+  function updateNavVisibility() {
+    const currentScrollY = window.scrollY;
+    const isScrolledVisibilityThreshold =
+      currentScrollY > NAV_VISIBILITY_THRESHOLD;
+
+    if (isScrolledVisibilityThreshold) {
+      const isScrollingDown = currentScrollY > lastScrollY;
+      if (isScrollingDown) nav.dataset.scrollState = 'hidden';
+      else nav.dataset.scrollState = 'visible';
+    } else {
+      // At top - always show
+      nav.dataset.scrollState = 'visible';
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateNavVisibility);
+      ticking = true;
+    }
+  });
+</script>

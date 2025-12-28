@@ -1,0 +1,65 @@
+---
+import '#/styles/global.css';
+import SEOHead from '#/components/SEOHead.astro';
+import SchemaOrg from '#/components/SchemaOrg.astro';
+import Navigation from '#/components/Navigation.astro';
+import Footer from '#/components/Footer.astro';
+import Particles from '#/components/Particles.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article' | 'profile';
+  publishedTime?: Date;
+  author?: string;
+}
+
+const {
+  title,
+  description = '',
+  image,
+  type = 'website',
+  publishedTime,
+  author,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SEOHead
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      publishedTime={publishedTime}
+      author={author}
+    />
+    <SchemaOrg
+      type="website"
+      name="Portfolio"
+      description={description}
+      url={Astro.site?.toString() || "https://example.com"}
+    />
+    <script is:inline>
+      // Prevent flash of wrong theme
+      const theme =
+        localStorage.getItem('theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light');
+      document.documentElement.classList.add(theme);
+    </script>
+  </head>
+  <body class="min-h-screen">
+    <Particles/>
+    <Navigation/>
+
+    <main>
+      <slot/>
+    </main>
+
+    <Footer/>
+  </body>
+</html>

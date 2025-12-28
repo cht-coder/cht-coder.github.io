@@ -1,0 +1,131 @@
+---
+import CareerItem from '#/components/CareerItem.astro';
+import { career } from '#/data/career';
+import { Button } from '@base-ui/react';
+import { getCollection } from 'astro:content';
+import { ArrowRight, ChevronDown } from 'lucide-astro';
+
+const INITIAL_VISIBLE = 2;
+const hasMoreItems = career.length > INITIAL_VISIBLE;
+const hiddenCount = career.length - INITIAL_VISIBLE;
+
+const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+---
+
+<section id="career-blog" class="section">
+  <div class="section-container">
+    <!-- Two column grid: Career (larger) | Recent Posts (smaller) -->
+    <div class="grid lg:grid-cols-[2fr_1fr] gap-16 lg:gap-12">
+      <!-- Career (takes more space) -->
+      <div class="group/career" id="career" data-expanded="false">
+        <h2 class="section-heading-lg">Career</h2>
+        <div id="career-timeline" class="relative pl-12 md:pl-16">
+          <!-- Animated wave line -->
+          <div
+            class="timeline-line absolute left-0 top-0 bottom-0 w-0.5 overflow-hidden"
+          >
+            <div class="wave-line w-full h-full"></div>
+          </div>
+
+          <!-- Career items container -->
+          <div id="career-items">
+            {career.map((item, i) => (
+              <CareerItem 
+                {...item} 
+                isFirst={i === 0}
+                isHidden={i >= INITIAL_VISIBLE}
+                className="career-item data-[initially-hidden=true]:hidden group-data-[expanded=true]/career:block! group-data-[expanded=true]/career:animate-fade-in"
+              />
+            ))}
+          </div>
+
+          <!-- Expand button -->
+          {hasMoreItems && (
+            <Button 
+              id="expand-career-btn"
+              className="mt-6 inline-flex items-center gap-2 font-mono text-sm uppercase tracking-wide text-text-muted hover:text-text transition-colors group"
+            >
+              <span class="expand-text">+{hiddenCount} more</span>
+              <ChevronDown class="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+            </Button>
+          )}
+        </div>
+      </div>
+
+      <!-- Recent Posts (takes less space) -->
+      <div>
+        <div class="flex items-center justify-between mb-12">
+          <h2 class="text-4xl md:text-5xl uppercase">Recent Posts</h2>
+        </div>
+        <div class="flex flex-col divide-y divide-border">
+          {recentPosts.map((post) => (
+            <a href={`/blog/${post.slug}`} class="group py-6 first:pt-0 last:pb-0 flex flex-col gap-2 hover:bg-bg-alt/50 -mx-4 px-4 rounded-lg transition-colors">
+              <time class="font-mono text-xs text-text-muted uppercase">
+                {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+              </time>
+              <h3 class="font-mono text-base group-hover:text-primary transition-colors">{post.data.title}</h3>
+            </a>
+          ))}
+        </div>
+        <a
+          href="/blog"
+          class="group inline-flex items-center gap-2 font-mono text-sm uppercase tracking-wide text-text-muted hover:text-text transition-colors mt-6"
+        >
+          View All
+          <ArrowRight
+            class="w-4 h-4 group-hover:translate-x-1 transition-transform"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Wave animation for timeline - only styling that can't be done with Tailwind */
+  .timeline-line {
+    background: var(--color-border);
+  }
+
+  .wave-line {
+    background: linear-gradient(
+      180deg,
+      var(--color-primary) 0%,
+      var(--color-border) 25%,
+      var(--color-primary) 50%,
+      var(--color-border) 75%,
+      var(--color-primary) 100%
+    );
+    background-size: 100% 200%;
+    animation: wave-flow 6s ease-in-out infinite;
+  }
+
+  @keyframes wave-flow {
+    0%,
+    100% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 0% 100%;
+    }
+  }
+</style>
+
+<script>
+  const career = document.getElementById('career') as HTMLDivElement;
+  const expandBtn = document.getElementById(
+    'expand-career-btn'
+  ) as HTMLButtonElement;
+  const hiddenItems = document.querySelectorAll(
+    '.career-item[data-initially-hidden=true]'
+  );
+
+  if (hiddenItems.length > 0) {
+    expandBtn.addEventListener('click', () => {
+      career.dataset.expanded = 'true';
+      expandBtn.style.display = 'none';
+    });
+  }
+</script>
