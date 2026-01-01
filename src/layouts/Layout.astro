@@ -30,7 +30,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="group/html">
   <head>
     <SEOHead
       title={title}
@@ -50,12 +50,10 @@ const {
     )}
     <slot name="head"/>
     <script is:inline>
+      import { getPreferedTheme } from '#/lib/utils';
+
       // Prevent flash of wrong theme
-      const theme =
-        localStorage.getItem('theme') ||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light');
+      const theme = getPreferedTheme();
       document.documentElement.classList.add(theme);
     </script>
   </head>
