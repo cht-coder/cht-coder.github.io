@@ -1,12 +1,13 @@
 ---
-import SectionDivider from '#/components/SectionDivider.astro';
 import SchemaOrg from '#/components/SchemaOrg.astro';
+import SectionDivider from '#/components/SectionDivider.astro';
+import { siteConfig } from '#/data/site-config';
+import Layout from '#/layouts/Layout.astro';
+
 import CareerAndPostsSection from './_home-sections/career-and-posts/CareerAndPostsSection.astro';
 import HeroSection from './_home-sections/hero/HeroSection.astro';
 import ProjectsSection from './_home-sections/projects/ProjectsSection.astro';
 import SkillsCertificationsSection from './_home-sections/skills-and-certifications/SkillsCertificationsSection.astro';
-import Layout from '#/layouts/Layout.astro';
-import { siteConfig } from '#/data/site-config';
 
 const sections = [
   HeroSection,
