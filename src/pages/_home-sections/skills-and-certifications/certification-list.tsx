@@ -1,5 +1,6 @@
 import { Maximize2 } from 'lucide-react';
 import { useCallback, useState } from 'react';
+
 import { type Certification, certifications } from '#/data/certifications';
 import { CertificationDialog } from './certification-dialog';
 

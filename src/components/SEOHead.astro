@@ -23,7 +23,8 @@ const {
 
 const siteUrl = Astro.site?.toString() || siteConfig.url;
 const currentUrl =
-  canonicalUrl || new URL(Astro.url.pathname, siteUrl).toString();
+  canonicalUrl ||
+  new URL(Astro.url.pathname, siteUrl).toString().replace(/\/$/, '');
 const imageUrl = image.startsWith('http')
   ? image
   : new URL(image, siteUrl).toString();

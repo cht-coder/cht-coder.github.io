@@ -1,18 +1,15 @@
 import { Dialog, type DialogRootProps } from '@base-ui/react/dialog';
 import { X } from 'lucide-react';
 import type { ReactNode } from 'react';
+
 import type { Certification } from '#/data/certifications';
 
 type CertificationDialogProps = Pick<DialogRootProps, 'open' | 'onOpenChange'> &
   Partial<Pick<Certification, 'title' | 'issuer'>> & { children: ReactNode };
 
-export function CertificationDialog({
-  open,
-  onOpenChange,
-  title,
-  issuer,
-  children,
-}: CertificationDialogProps) {
+export function CertificationDialog(props: CertificationDialogProps) {
+  const { open, onOpenChange, title, issuer, children } = props;
+
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>

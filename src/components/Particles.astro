@@ -18,7 +18,6 @@
   ) as HTMLCanvasElement;
   const ctx = canvas.getContext('2d');
 
-  // Resize canvas to window
   function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -36,7 +35,7 @@
   };
 
   const particles: Particle[] = [];
-  const PARTICLE_COUNT = 10;
+  const PARTICLE_COUNT = 5;
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
     particles.push({
@@ -102,7 +101,6 @@
     requestAnimationFrame(() => animate(ctx));
   }
 
-  // Check for reduced motion preference
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
     animate(ctx);
 </script>
