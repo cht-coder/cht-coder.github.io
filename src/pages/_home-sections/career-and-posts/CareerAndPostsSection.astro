@@ -25,12 +25,8 @@ const recentPosts = (await getCollection('posts', ({ data }) => !data.draft))
           My professional journey building software solutions.
         </p>
         <div id="career-timeline" class="relative pl-12 md:pl-16">
-          <!-- Animated wave line -->
-          <div
-            class="timeline-line absolute left-0 top-0 bottom-0 w-0.5 overflow-hidden"
-          >
-            <div class="wave-line w-full h-full"></div>
-          </div>
+          <!-- Timeline line -->
+          <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-border"></div>
 
           <!-- Career items container -->
           <div id="career-items">
@@ -68,16 +64,23 @@ const recentPosts = (await getCollection('posts', ({ data }) => !data.draft))
           </p>
         </div>
         <div class="flex flex-col divide-y divide-border">
-          {recentPosts.map((post) => (
-            <a href={`/posts/${post.slug}`} class="group py-6 first:pt-0 last:pb-0 flex flex-col gap-2 hover:bg-bg-alt/50 -mx-4 px-4 rounded-lg transition-colors">
-              <time class="font-mono text-xs text-text-muted uppercase">
-                {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-              </time>
-              <h3 class="font-mono text-base group-hover:text-primary transition-colors">{post.data.title}</h3>
-            </a>
-          ))}
+          {recentPosts.length > 0 ? (
+            recentPosts.map((post) => (
+              <a href={`/posts/${post.slug}`} class="group py-6 first:pt-0 last:pb-0 flex flex-col gap-2 hover:bg-bg-alt/50 -mx-4 px-4 rounded-lg transition-colors">
+                <time class="font-mono text-xs text-text-muted uppercase">
+                  {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </time>
+                <h3 class="font-mono text-base group-hover:text-primary transition-colors">{post.data.title}</h3>
+              </a>
+            ))
+          ) : (
+            <div class="py-8 text-center">
+              <p class="font-mono text-sm text-text-muted">No posts yet.</p>
+              <p class="font-mono text-xs text-text-muted/70 mt-2">Check back soon for new content!</p>
+            </div>
+          )}
         </div>
-        <a
+        {recentPosts.length > 0 && <a
           href="/posts"
           class="group inline-flex items-center gap-2 font-mono text-sm uppercase tracking-wide text-text-muted hover:text-text transition-colors mt-6"
         >
@@ -85,41 +88,11 @@ const recentPosts = (await getCollection('posts', ({ data }) => !data.draft))
           <ArrowRight
             class="w-4 h-4 group-hover:translate-x-1 transition-transform"
           />
-        </a>
+        </a>}
       </div>
     </div>
   </div>
 </section>
-
-<style>
-  /* Wave animation for timeline - only styling that can't be done with Tailwind */
-  .timeline-line {
-    background: var(--color-border);
-  }
-
-  .wave-line {
-    background: linear-gradient(
-      180deg,
-      var(--color-primary) 0%,
-      var(--color-border) 25%,
-      var(--color-primary) 50%,
-      var(--color-border) 75%,
-      var(--color-primary) 100%
-    );
-    background-size: 100% 200%;
-    animation: wave-flow 6s ease-in-out infinite;
-  }
-
-  @keyframes wave-flow {
-    0%,
-    100% {
-      background-position: 0% 0%;
-    }
-    50% {
-      background-position: 0% 100%;
-    }
-  }
-</style>
 
 <script>
   const career = document.getElementById('career') as HTMLDivElement;
