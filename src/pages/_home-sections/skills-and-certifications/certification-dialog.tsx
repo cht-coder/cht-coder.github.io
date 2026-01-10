@@ -1,14 +1,26 @@
+import { Button } from '@base-ui/react';
 import { Dialog, type DialogRootProps } from '@base-ui/react/dialog';
-import { X } from 'lucide-react';
-import type { ReactNode } from 'react';
-
-import type { Certification } from '#/data/certifications';
+import { ArrowLeft, X } from 'lucide-react';
+import type { PropsWithChildren } from 'react';
 
 type CertificationDialogProps = Pick<DialogRootProps, 'open' | 'onOpenChange'> &
-  Partial<Pick<Certification, 'title' | 'issuer'>> & { children: ReactNode };
+  PropsWithChildren<{
+    title?: string;
+    description?: string;
+    showBackButton?: boolean;
+    onBack?: () => void;
+  }>;
 
 export function CertificationDialog(props: CertificationDialogProps) {
-  const { open, onOpenChange, title, issuer, children } = props;
+  const {
+    open,
+    onOpenChange,
+    title,
+    description,
+    showBackButton,
+    onBack,
+    children,
+  } = props;
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -24,15 +36,27 @@ export function CertificationDialog(props: CertificationDialogProps) {
         >
           {/* Header */}
           <div className='flex items-center justify-between p-5 border-b-2 border-border bg-bg/50'>
-            <div>
-              <Dialog.Title className='font-mono text-xl font-bold'>
-                {title}
-              </Dialog.Title>
-              {issuer && (
-                <Dialog.Description className='text-sm text-text-muted mt-1'>
-                  {issuer}
-                </Dialog.Description>
+            <div className='flex items-center gap-3'>
+              {showBackButton && onBack && (
+                <Button
+                  type='button'
+                  onClick={onBack}
+                  className='p-2 rounded-xl border-2 border-transparent hover:border-border hover:bg-bg transition-all'
+                  aria-label='Back to grid'
+                >
+                  <ArrowLeft className='w-5 h-5' />
+                </Button>
               )}
+              <div>
+                <Dialog.Title className='font-mono text-xl font-bold'>
+                  {title}
+                </Dialog.Title>
+                {description && (
+                  <Dialog.Description className='text-sm text-text-muted mt-1'>
+                    {description}
+                  </Dialog.Description>
+                )}
+              </div>
             </div>
             <Dialog.Close className='p-2.5 rounded-xl border-2 border-transparent hover:border-border hover:bg-bg transition-all'>
               <X className='w-5 h-5' />
