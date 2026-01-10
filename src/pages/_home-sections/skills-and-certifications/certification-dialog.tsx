@@ -65,7 +65,7 @@ export function CertificationDialog(props: CertificationDialogProps) {
           </div>
 
           {/* Content */}
-          <div className='overflow-auto max-h-[calc(85vh-100px)] p-5'>
+          <div className='overflow-auto max-h-[calc(85vh-100px)]'>
             {children}
           </div>
         </Dialog.Popup>

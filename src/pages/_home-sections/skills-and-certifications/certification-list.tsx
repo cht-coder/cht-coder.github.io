@@ -103,11 +103,11 @@ export function CertificationList() {
             <iframe
               src={selected.selectedInGroup.url}
               title={selected.selectedInGroup.title}
-              className='w-full h-[60vh] border border-border rounded-lg'
+              className='w-full h-[60vh] border-none rounded-lg'
               allowFullScreen
             />
           ) : (
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-4 p-5'>
               {selected.group.items.map((item) => (
                 <Button
                   key={item.url}
