@@ -8,7 +8,7 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    react(),
+    react({ babel: { plugins: ['babel-plugin-react-compiler'] } }),
     mdx(),
     sitemap({ namespaces: { image: false, video: false } }),
   ],
