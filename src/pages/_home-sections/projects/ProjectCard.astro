@@ -1,5 +1,6 @@
 ---
-import { ArrowUpRight } from 'lucide-astro';
+import { Image } from 'astro:assets';
+import { ArrowUpRight, Github } from 'lucide-astro';
 
 interface Props {
   title: string;
@@ -7,50 +8,80 @@ interface Props {
   desc: string;
   tags: readonly string[];
   color: string;
-  url: string;
+  url?: string;
+  github?: string;
+  image?: ImageMetadata;
 }
 
-const { title, year, desc, tags, color, url } = Astro.props;
+const { title, year, desc, tags, color, url, github, image } = Astro.props;
+const hasLinks = url || github;
 ---
 
-<a
-  href={url}
-  target="_blank"
-  rel="noopener"
+<div
   class="group flex flex-col bg-bg-alt border-2 border-border rounded-xl shadow-[4px_4px_0_var(--color-border)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_var(--color-border)] transition-all overflow-hidden"
 >
-  <!-- Thumbnail Placeholder -->
-  <div
-    class={`h-40 bg-linear-to-br ${color} border-b-2 border-border flex items-center justify-center`}
-  >
-    <svg
-      class="w-12 h-12 text-text-muted/30"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      stroke-width="1.5"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+  <!-- Thumbnail -->
+  {image ? (
+    <div class="h-40 border-b-2 border-border overflow-hidden">
+      <Image 
+        src={image} 
+        alt={title} 
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
       />
-    </svg>
-  </div>
-  <div class="p-5 flex flex-col gap-2 flex-1">
-    <div class="flex items-center justify-between">
-      <h3
-        class="text-base font-mono font-bold group-hover:text-primary transition-colors"
+    </div>
+  ) : (
+    <div
+      class={`h-40 bg-linear-to-br ${color} border-b-2 border-border flex items-center justify-center`}
+    >
+      <svg
+        class="w-12 h-12 text-text-muted/30"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="1.5"
       >
-        {title}
-      </h3>
-      <div class="flex items-center gap-2">
-        <span class="font-mono text-xs text-text-muted">{year}</span>
-        <ArrowUpRight
-          class="size-4 text-text-muted group-hover:text-primary group-hover:-translate-y-1 transition"
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
         />
-      </div>
+      </svg>
+    </div>
+  )}
+  <div class="p-5 flex flex-col gap-2 flex-1">
+    <!-- Year label -->
+    <span class="font-mono text-xs text-text-muted">{year}</span>
+
+    <!-- Title and action icons -->
+    <div class="flex items-center justify-between gap-2">
+      <h3 class="text-base font-mono font-bold transition-colors">{title}</h3>
+      {(url || github) && (
+        <div class="flex items-center gap-1">
+          {url && (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener"
+              class="p-1.5 text-text-muted hover:text-primary hover:bg-primary/10 rounded-md transition-all"
+              aria-label="View project"
+            >
+              <ArrowUpRight class="w-4 h-4" />
+            </a>
+          )}
+          {github && (
+            <a
+              href={github}
+              target="_blank"
+              rel="noopener"
+              class="p-1.5 text-text-muted hover:text-primary hover:bg-primary/10 rounded-md transition-all"
+              aria-label="View source code"
+            >
+              <Github class="w-4 h-4" />
+            </a>
+          )}
+        </div>
+      )}
     </div>
     <p class="text-text-muted text-sm leading-relaxed">{desc}</p>
     <div class="flex gap-2 flex-wrap mt-auto pt-3">
@@ -59,4 +90,4 @@ const { title, year, desc, tags, color, url } = Astro.props;
       ))}
     </div>
   </div>
-</a>
+</div>
