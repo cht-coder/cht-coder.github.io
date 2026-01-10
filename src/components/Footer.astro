@@ -1,4 +1,5 @@
 ---
+import { Button } from '@base-ui/react';
 import { Github, Twitter, Linkedin, Mail, ArrowUp, Heart } from 'lucide-astro';
 
 import { navItems } from '#/data/navigation';
@@ -75,16 +76,16 @@ const iconMap: Record<string, typeof Github> = {
         </nav>
 
         <!-- Back to top button -->
-        <button
+        <Button
           id="back-to-top"
-          class="mt-2 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wide text-text-muted hover:text-text transition-colors group"
+          className="mt-2 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wide text-text-muted hover:text-text transition-colors group"
           aria-label="Back to top"
         >
           <ArrowUp
             class="w-4 h-4 transition-transform group-hover:-translate-y-0.5"
           />
           <span>Back to Top</span>
-        </button>
+        </Button>
       </div>
     </div>
 
@@ -95,8 +96,8 @@ const iconMap: Record<string, typeof Github> = {
 
     <!-- Tamil Quote -->
     <div class="flex items-center justify-center gap-2 text-sm text-text-muted">
-      <Heart class="w-3.5 h-3.5 text-primary fill-primary"/>
-      <span class="font-mono tracking-wide">யாதும் ஊரே யாவரும் கேளிர்</span>
+      <Heart class="size-3.5 text-primary fill-primary"/>
+      <span class="font-ta tracking-wide">யாதும் ஊரே, யாவரும் கேளிர் !</span>
     </div>
   </div>
 </footer>
