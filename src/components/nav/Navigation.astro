@@ -1,7 +1,7 @@
 ---
 import { Home } from 'lucide-astro';
-import ThemeToggle from './ThemeToggle.astro';
 import { navItems } from '#/data/navigation';
+import { ThemeToggle } from './theme-toggle';
 
 const currentPath = Astro.url.pathname;
 
@@ -48,7 +48,7 @@ const isActivePage = (href: string) => {
   <!-- Divider -->
   <div class="w-px h-5 bg-border-light mx-1"></div>
 
-  <ThemeToggle/>
+  <ThemeToggle client:load/>
 </nav>
 
 <script>
