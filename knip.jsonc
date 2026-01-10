@@ -1,5 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreDependencies": ["sharp"], // sharp used by astro, need to be externally installed while using pnpm.
   "ignoreExportsUsedInFile": {
     "interface": true,
     "type": true
