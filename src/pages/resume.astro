@@ -1,5 +1,5 @@
 ---
-import { ArrowLeft, Download } from 'lucide-astro';
+import { ArrowLeft, Download, LoaderPinwheel } from 'lucide-astro';
 
 import Layout from '#/layouts/Layout.astro';
 
@@ -35,11 +35,21 @@ const resumeDownloadName = 'Your_Name_Resume.pdf';
           class="w-full bg-bg-alt border-2 border-border rounded-xl overflow-hidden shadow-[8px_8px_0_var(--color-border)]"
         >
           <iframe
+            id="resumeEmbedFrame"
             src={resumeUrl}
             loading="lazy"
             title="Resume"
-            class="w-full h-(--resume-height) max-h-[85vh] border-0"
+            data-state="loading"
+            class="w-full h-(--resume-height) border-0 data-[state=loading]:opacity-0 data-[state=loading]:pointer-events-none transition-opacity peer"
           ></iframe>
+          <div
+            class="absolute inset-0 flex flex-col items-center justify-center gap-4 from-bg-alt from-0% via-bg via-50% to-bg-alt to-100% bg-linear-135 bg-size-[200%_200%] animate-pulse ease-in-out [animation-duration:2s] rounded-lg peer-data-[state=loaded]:hidden"
+          >
+            <LoaderPinwheel
+              class="size-10 animate-spin [animate_duration:0.8s]"
+            />
+            <span class="text-sm text-text-muted font-mono"> Loading... </span>
+          </div>
         </div>
         <!-- pop-out block -->
         <div class="absolute top-0 right-0 size-20 select-none"></div>
@@ -48,7 +58,7 @@ const resumeDownloadName = 'Your_Name_Resume.pdf';
           download={resumeDownloadName}
           class="absolute top-3 right-3 md:right-3 lg:right-3 z-40 inline-flex items-center gap-2 px-4 py-3 bg-primary text-bg font-mono text-sm uppercase tracking-wide rounded-xl border-2 border-primary shadow-[4px_4px_0_var(--color-border)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_var(--color-border)] transition-all"
         >
-          <Download class="w-4 h-4"/>
+          <Download class="size-4"/>
           <span class="hidden sm:inline">Download</span>
         </a>
 
@@ -77,3 +87,12 @@ const resumeDownloadName = 'Your_Name_Resume.pdf';
     --resume-height: 1200px;
   }
 </style>
+
+<script>
+  const resumeEmbedFrame = document.getElementById(
+    'resumeEmbedFrame'
+  ) as HTMLIFrameElement;
+  resumeEmbedFrame.onload = () => {
+    resumeEmbedFrame.dataset.state = 'loaded';
+  };
+</script>
