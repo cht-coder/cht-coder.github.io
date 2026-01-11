@@ -10,6 +10,7 @@ import {
   type SingleCertificate,
 } from '#/data/certifications';
 import { CertificationDialog } from './certification-dialog';
+import { IframeEmbed } from './iframe-embed';
 
 type SelectedState =
   | { type: 'single'; cert: SingleCertificate }
@@ -83,11 +84,10 @@ export function CertificationList() {
           title={selected.cert.title}
           description={selected.cert.issuer}
         >
-          <iframe
+          <IframeEmbed
             src={selected.cert.url}
             title={selected.cert.title}
-            className='w-full h-[60vh] border border-border'
-            allowFullScreen
+            className='w-full h-[60vh] border-none rounded-lg'
           />
         </CertificationDialog>
       )}
@@ -100,11 +100,10 @@ export function CertificationList() {
           {...groupedProps}
         >
           {selected.selectedInGroup ? (
-            <iframe
+            <IframeEmbed
               src={selected.selectedInGroup.url}
               title={selected.selectedInGroup.title}
               className='w-full h-[60vh] border-none rounded-lg'
-              allowFullScreen
             />
           ) : (
             <div className='grid grid-cols-2 md:grid-cols-3 gap-4 p-5'>

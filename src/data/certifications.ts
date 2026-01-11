@@ -26,13 +26,13 @@ export const certifications: ReadonlyArray<Certificate> = [
     title: 'AWS Solutions Architect',
     issuer: 'Amazon Web Services',
     date: 'Dec 2024',
-    url: '/#aws',
+    url: '/?_q=/#aws',
   },
   {
     title: 'Google Cloud Professional',
     issuer: 'Google Cloud',
     date: 'Jul 2023',
-    url: '/#google',
+    url: '/?_q=/#google',
   },
   {
     title: 'Microsoft Certfications',
@@ -40,8 +40,16 @@ export const certifications: ReadonlyArray<Certificate> = [
     date: 'Mar 2024',
     type: 'group',
     items: [
-      { title: 'Azure Fundamentals', url: '/#az900', date: 'Jan 2024' },
-      { title: 'Power Platform', url: '/#pl900', date: 'Mar 2024' },
+      {
+        title: 'Azure Fundamentals',
+        url: '/?_q=/#az900',
+        date: 'Jan 2024',
+      },
+      {
+        title: 'Power Platform',
+        url: '/?_q=/#pl900',
+        date: 'Mar 2024',
+      },
     ],
   },
 ];
